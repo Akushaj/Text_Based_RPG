@@ -279,6 +279,38 @@ void Adventure::printEndings(Scene<Moment>* scene, const std::string& path) cons
 //     Loot: <loot>
 //     Result: died               (or "Result: reached an ending")
 void Adventure::greedyRun() const {
+    int hp = startHp_;
+    int loot = 0;
+    std::string path = "";
+    Scene<Moment>* current = tree_.getRoot();
+    bool died = false;
+    while (true) {
+        hp += current->getData()->getHpChange();
+        loot += current->getData()->getLoot();
+        if (hp <= 0) {
+            died = true;
+            break;
+        }
+        if (current->isEnding()) {
+            break;
+        }
+        int bestIndex = 0;
+        for (int i = 0; i < current->getNumChoices() ; i++) {
+            if (current->getChoice(i)->getData()->getLoot() > current->getChoice(bestIndex)->getData()->getLoot()) {
+                bestIndex = i;
+            }
+        }
+        path = extendPath(path, bestIndex+1);
+        current = current->getChoice(bestIndex);
+    }
+    std::cout << "Greedy advisor" << std::endl;
+    std::cout << "   Path: " << path << std::endl;
+    std::cout << "   Loot: " << loot << std::endl;
+    if (died) {
+        std::cout << "   Result: died" << std::endl;
+    } else {
+        std::cout << "   Result: reached an ending" << std::endl;
+    }
 }
 
 // TODO 18: the best total loot you can collect from scene down to an ending,
