@@ -1,6 +1,90 @@
 START_HP 10
-SCENE Replace this file with your own story.
+SCENE Tung Tung Sahur was murdered in an AlleyWay with his own bat. Sahur jr embarks on a journey to find his father's killer.
 HP 0
 LOOT 0
 ITEM none
-CHOICES 0
+CHOICES 3
+LABEL Walk down that dark AlleyWay at night
+    SCENE You get your ass beaten by a bunch of homeless and they defecate on you. You realized u ain't built for this shit so u lowkenly pass away right there.
+    HP -10
+    LOOT 1
+    ITEM none
+    CHOICES 0
+LABEL Walk down that AlleyWay on a sunny day
+    SCENE You go through the alleyway looking at the exact spot your father tung died.
+    HP 5
+    LOOT 2
+    ITEM Gloves
+    CHOICES 1
+    LABEL Go near the garbage can that's right by the spot
+        SCENE You approach the garbage can. It stinks. Enough to burn your nose hair away.
+        HP 3
+        LOOT 2
+        ITEM Gloves
+        CHOICES 2
+        LABEL Cover your nose.
+            SCENE You quickly cover your nose with your left hand to avoid being sick.
+            HP 4
+            LOOT 2
+            ITEM Gloves
+            CHOICES 1
+            LABEL Put on your Gloves and Open the garbage lid.
+                SCENE U see a piece of crumpled paper sitting on top of the grabage.Almost like it was placed deliberately
+                HP 4
+                LOOT 1
+                ITEM none
+                CHOICES 2
+                LABEL Rummage through the garbage can and see if u find anything else.
+                    SCENE While rummaging u cut ur thumb open with a rusted nail. U get tetanus and get poisoned due to the funky looking liquid from the garbage can going into ur cut. You barf your guts out and die.
+                    HP -30
+                    LOOT 3
+                    ITEM none
+                    CHOICES 0
+                LABEL Take the paper and go to the address written on the paper.
+                    SCENE You go to the address. It's a 10 story building. You reach the top floor. There is someone waiting for you.
+                    HP 4
+                    LOOT 3
+                    ITEM Pistol
+                    CHOICES 2
+                    LABEL Shoot the guy without even seeing who he is.
+                        SCENE Since the guy is far away u miss most of your shots. But u got lucky and one bullet went straight through his eyeball.
+                        HP 3
+                        LOOT 4
+                        ITEM Pistol
+                        CHOICES 1
+                            LABEL Stand near him and say why you were there.
+                                SCENE You stand next to the guy u shot. His face is all covered with the blood coming out of his eyeball. You say " Tung Tung sends his regards". Hearing the name leave your mouth his other eyeball pops out of him. He dies.
+                                HP 4
+                                LOOT 5
+                                ITEM none
+                                CHOICES 1
+                                LABEL End it
+                                    SCENE After having your revenge u fell nothing but emptiness inside you. You don't want to deal with these complex emotions for your whole life. So you just jump off the building on some non chalant shit.
+                                    HP 0
+                                    LOOT 6
+                                    ITEM none
+                                    CHOICES 0
+                    LABEL Get a good look of who that guy is by walking near him.
+                        SCENE You go walk up to him and get a good look at his face. You are shocked. It is Tung Tang Sahur. Your Uncle
+                        HP 4
+                        LOOT 5
+                        ITEM Pistol
+                        CHOICES 1
+                            LABEL Take your revenge
+                                SCENE No matter how much u asked he didn't answered why he killed your father. Overcome by your anger u beat your own uncle with your fathers bat that he used to carry all around. You get a Heart-attack.
+                                HP -40
+                                LOOT 6
+                                ITEM none
+                                CHOICES 0
+        LABEL Don't cover your nose.
+            SCENE Afraid you might loose Aura by covering your nose you just stand there taking all of it in. That was a bad idea. You slump on the ground and hit your head on the pavement. You die by bleeding out.
+            HP -20
+            LOOT 2
+            ITEM brain hemorrhage
+            CHOICES 0
+LABEL Stay at home
+    SCENE Rather than letting revenge take over your life. You stay at home playing games and trying to build a family. Pacifist Route.
+    HP 10
+    LOOT 1
+    ITEM none
+    CHOICES 0
