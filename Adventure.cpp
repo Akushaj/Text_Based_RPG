@@ -143,7 +143,29 @@ Scene<Moment>* Adventure::readScene(std::ifstream& in, const std::string& label)
 //     and ask again.
 //   - If the input ends (getline fails), return 0.
 int Adventure::askChoice(int numChoices) {
-    return 0;
+    std::string line ;
+    while (true) {
+        std::cout << "Your choice: ";
+        if (!std::getline(std::cin, line)) {
+            return 0;
+        }
+        bool valid = true;
+        if (line.empty()) {
+            valid = false;
+        }
+        for (int i =0 ; i < line.size() ; i++) {
+            if (line[i] < '0' || line[i] > '9') {
+                valid = false;
+            }
+        }
+        if (valid && line.size() <= 9) {
+            int n = std::stoi(line);
+            if ( n >= 1 && n <= numChoices ) {
+                return n;
+            }
+        }
+        std::cout << "Please type a number from 1 to " << numChoices << "." << std::endl;
+    }
 }
 
 // TODO 13: play the story once from the start.
@@ -164,6 +186,46 @@ int Adventure::askChoice(int numChoices) {
 // and then print the bag.
 // The bag is a List<Item>. Start with HP = startHp_ and loot = 0.
 void Adventure::play() {
+    int hp = startHp_;
+    int loot = 0;
+    List<Item> bag;
+    Scene<Moment>* current = tree_.getRoot();
+    while (current != nullptr) {
+        Moment* m = current->getData();
+        hp += m->getHpChange();
+        loot += m->getLoot();
+        std::cout << std::string(40, '-') << std::endl;
+        std::cout << m->getText() << std::endl;
+        if ( m->hasItem()) {
+            Item found(m->getItem());
+            if (bag.search(found)) {
+                std::cout << "You already have: " << found << std::endl;
+            }else {
+                bag.addFront(new Item(found));
+                std::cout << "You picked up: " << found << std::endl;
+            }
+        }
+        std::cout << "HP: " << hp << "  Loot: " << loot << std::endl;
+        if (hp <= 0) {
+            std::cout << "Your HP hit 0. GAME OVER." << std::endl;
+            break;
+        }
+        if (current->isEnding()) {
+            std::cout << "THE END." << std::endl;
+            break;
+        }
+        for (int i = 0 ; i < current->getNumChoices() ; i++) {
+            std::cout << "[" << i + 1 << "] " << current->getChoice(i)->getData()->getLabel() << std::endl;
+        }
+        int choice = askChoice(current->getNumChoices());
+        if (choice == 0 ) {
+            break;
+        }
+        current = current->getChoice(choice - 1);
+    }
+    std::cout << "Final HP: " << hp << "  Final loot: " << loot << std::endl;
+    std::cout << "Inventory (" << bag.size() << " items):" << std::endl;
+    bag.print();
 }
 
 // ===================== ANALYZING =====================
