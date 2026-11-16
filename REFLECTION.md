@@ -39,3 +39,17 @@ TODO 19 (optimalRun): Calls bestLoot from the root and prints the best path and 
 
 ### Why does each scene allocate exactly numChoices slots instead of declaring Scene<T>* choices[3]? What does an ending hold in choices_, and why?
 == Scene<T>* choices[3] would waste memory on every scene that has fewer than 3 choices, especially endings which need none. By allocating exactly numChoices slots uses only the memory a scene needs.
+
+### Walk through your Scene destructor. What gets deleted, and in what order? What would go wrong if choices_ were deleted first?
+== It first deletes each child scene in choices_[i], which recursively deletes that child’s whole subtree. Then it does delete[] choices_ to free the array of pointers, and last delete data_ to free the Moment. If choices_ were deleted first, we’d lose the pointers to the children. Nothing could free those scenes anymore, so every child and everything under it would leak.
+
+## Show the path greedy took and the path optimal took on your story, with the loot for each. Explain why greedy lost. If greedy did not lose, change your story until it does, and explain what you changed.
+== Greedy: path 2-1-1-1-1, loot 10, and it died.
+Optimal: path 2-1-1-1-2-1-1-1, loot 25, and it reached an ending.
+Greedy lost because it only looks at the next scene’s loot. At the fifth choice it took the bigger-loot option, which cost too much HP and killed it. Optimal took the lower-loot option, stayed alive, and collected more loot later. Since greedy already lost, I didn’t have to change my story.
+
+###  bestLoot tries every path, yet it runs in O(n) time. Explain why it is not exponential, using what you know about paths and leaves in a tree.
+== It does try every path, but the paths share their starting scenes, so we never redo that work. Each scene is visited exactly once, and the function does a constant amount of work per scene. The number of root-to-leaf paths equals the number of leaves, which is at most n. So the total work is proportional to the number of scenes, O(n), not exponential.
+
+### Which List methods does your game use, and why? What does one search cost as the bag grows ?
+== The game uses addFront to add a new item. Search to check if the bag already has an item. Size for counting inventory. Print to show the bag at the end.In the worst case, when the item isn’t in the bag, it checks k items, so one search costs O(k), where k is the number of items in the bag. As the bag grows, searching for an item can take longer because there are more items to check.
